@@ -9,7 +9,7 @@
 #(layer outer)
 #(condition "A.Type == 'track'"))
 
-#(rule "PCBWay: Minimum Trace Width and Spacing (innner layer)"
+#(rule "PCBWay: Minimum Trace Width and Spacing (inner layer)"
 #(constraint track_width (min 0.1524mm))
 #(constraint clearance (min 0.1778mm))
 #(layer inner)
