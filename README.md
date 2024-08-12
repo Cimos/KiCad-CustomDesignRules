@@ -1,4 +1,6 @@
-# JLCPCB-KiCad-DRC
+# KiCad-Custom-DRC
+
+Forked From [KiCad-DesignRules]([url](https://github.com/labtroll/KiCad-DesignRules)) due to lack of activity.
 
 JLCPCB Design Rules for KiCad 7.0, implemented as Custom Rules in PCB Editor `File > Board_Setup... > Design Rules > Custom Rules`), and stored in the `.kicad_dru` file.
 
@@ -6,7 +8,7 @@ These rules use some features only available in KiCad 7.0.
 
 Each design rule is validated for PASS/FAIL the associated PCB (`.kicad_pcb`).
 
-## Use in your KiCad 7 project
+## Use in your KiCad 8 project
 
 Simply copy the [`JLCPCB.kicad_dru`](JLCPCB/JLCPCB.kicad_dru) file into your KiCad 7 project folder, and rename it to match your project name `your-project.kicad_dru`.
 
@@ -17,5 +19,5 @@ The JLCPCB Design Rules will automatically be included in the KiCad PCB Editor (
 - [Capabilities](https://jlcpcb.com/capabilities/Eagle%20PCB%20to%20gerber%20files)
 
 ## KiCAD documentation
-- [Custom Design Rules (KiCad 7.0)](https://docs.kicad.org/7.0/en/pcbnew/pcbnew.html#custom_design_rules)
+- [Custom Design Rules (KiCad 8.0)](https://docs.kicad.org/8.0/en/pcbnew/pcbnew.html#custom-design-rules)
 
