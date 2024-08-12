@@ -1,4 +1,14 @@
 (version 1)
+# Custom Design Rules (DRC) for KiCAD 8.0 (Stored in '<project>.kicad_dru' file).
+#
+# Matching PCBWay capabilities: https://www.pcbway.com/capabilities.html
+#
+# KiCad documentation: https://docs.kicad.org/master/id/pcbnew/pcbnew_advanced.html#custom_design_rules
+#
+# Inspiration
+# - https://gist.github.com/darkxst/f713268e5469645425eed40115fb8b49 (with comments)
+# - https://gist.github.com/denniskupec/e163d13b0a64c2044bd259f64659485e (with comments)
+
 
 # --- Minimum trace width and spacing (PICK ONE) ---
 
