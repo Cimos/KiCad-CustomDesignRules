@@ -7,6 +7,11 @@
 		(legacy_teardrops no)
 	)
 	(paper "A4")
+	(title_block
+		(title "PCBWay Custom Design Rules (.kicad_dru)")
+		(date "2024-08-12")
+		(rev "8")
+	)
 	(layers
 		(0 "F.Cu" signal)
 		(31 "B.Cu" signal)

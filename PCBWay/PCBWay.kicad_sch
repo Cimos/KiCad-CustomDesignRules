@@ -4,6 +4,11 @@
 	(generator_version "8.0")
 	(uuid "8cc84b32-a2cf-4d87-98c9-2c7b7c66699c")
 	(paper "A4")
+	(title_block
+		(title "PCBWay Custom Design Rules (.kicad_dru)")
+		(date "2024-08-12")
+		(rev "8")
+	)
 	(lib_symbols)
 	(sheet_instances
 		(path "/"

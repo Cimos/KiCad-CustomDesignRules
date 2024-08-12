@@ -9,9 +9,8 @@
 	(paper "A4" portrait)
 	(title_block
 		(title "JLCPCB Custom Design Rules (.kicad_dru)")
-		(date "2023-10-19")
-		(company "LabTroll")
-		(comment 1 "Author: Morten Hattesen")
+		(date "2024-08-12")
+		(rev "8")
 	)
 	(layers
 		(0 "F.Cu" signal)
@@ -110,7 +109,8 @@
 		)
 		(pad_to_mask_clearance 0)
 		(allow_soldermask_bridges_in_footprints no)
-		(grid_origin 31 88)
+		(aux_axis_origin 14 248)
+		(grid_origin 14 248)
 		(pcbplotparams
 			(layerselection 0x00010fc_ffffffff)
 			(plot_on_all_layers_selection 0x0000000_00000000)
