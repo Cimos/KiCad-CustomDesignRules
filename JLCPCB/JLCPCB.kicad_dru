@@ -1,9 +1,9 @@
 (version 1)
-# Custom Design Rules (DRC) for KiCAD 7.0 (Stored in '<project>.kicad_dru' file).
+# Custom Design Rules (DRC) for KiCAD 8.0 (Stored in '<project>.kicad_dru' file).
 #
 # Matching JLCPCB capabilities: https://jlcpcb.com/capabilities/pcb-capabilities
 #
-# KiCad documentation: https://docs.kicad.org/master/id/pcbnew/pcbnew_advanced.html#custom_design_rules
+# KiCad documentation: https://docs.kicad.org/master/id/pcbnew/pcbnew_advanced.html#custom-design-rules
 #
 # Inspiration
 # - https://gist.github.com/darkxst/f713268e5469645425eed40115fb8b49 (with comments)
