@@ -1,1 +1,0 @@
-# Design Rules for JLCPCB

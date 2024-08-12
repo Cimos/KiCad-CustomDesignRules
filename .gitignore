@@ -1,18 +1,20 @@
-## KiCad 7 - https://www.kicad.org/
-
 ## KiCad temporary files
 # eg: ~PROJECT.kicad_sch.lck
 ~*.kicad_???.lck
+
 # eg: .~lock.PROJECT.csv#
 .~lock.*#
+
 \#auto_saved_files#
 fp-info-cache
 
 ## KiCad backup directories and files
 # eg: PROJECT-backups/ (contains PROJECT-YYYY-MM-DD_hhmmss.zip files)
 *-backups/
+
 # eg: PROJECT.kicad_sch-bak  PROJECT.kicad_pcb-bak
 *.kicad_???-bak
+
 # eg: PROJECT.kicad_sch.bak  SYMBOL-LIB.kicad_sym.bak
 *.bak
 
@@ -23,7 +25,6 @@ fp-info-cache
 ## Non-KiCad files and directories
 # Always ignore tmp directories and their contents
 tmp/
+
 # MacOS stuff
 .DS_Store
-
-
