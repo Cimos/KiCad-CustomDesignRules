@@ -1,5 +1,5 @@
 (version 1)
-# Custom Design Rules (DRC) for KiCAD 7.0 (Stored in '<project>.kicad_dru' file).
+# Custom Design Rules (DRC) for KiCAD 8.0 (Stored in '<project>.kicad_dru' file).
 #
 # Matching JLCPCB capabilities: https://jlcpcb.com/capabilities/pcb-capabilities
 #
@@ -84,6 +84,14 @@
 	(condition "(A.Type == 'Via' && A.Hole < 0.3mm && A.Diameter <= 0.4mm) || (A.Type == 'Pad' && ((A.Hole_Size_X < 0.3mm && A.Size_X <= 0.4mm) || (A.Hole_Size_Y < 0.3mm && A.Size_Y <= 0.4mm)))")
   # 4-6 Layers
   (constraint annular_width (min 0.125mm))
+)
+
+
+# --- VIA Support Rules --- 
+
+(rule "JLCPCB: Only Throughhole VIAs are supported" 
+	(condition "A.Type == 'Via'")
+	(constraint assertion "!(A.isBlindBuriedVia() || A.isMicroVia())")
 )
 
 
