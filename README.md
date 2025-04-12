@@ -18,4 +18,5 @@ The JLCPCB Design Rules will automatically be included in the KiCad PCB Editor (
 
 ## KiCAD documentation
 - [Custom Design Rules (KiCad 7.0)](https://docs.kicad.org/7.0/en/pcbnew/pcbnew.html#custom_design_rules)
-
+- [Custom Design Rules (KiCad 8.0)](https://docs.kicad.org/8.0/en/pcbnew/pcbnew.html#custom_design_rules)
+- [Custom Design Rules (KiCad 9.0)](https://docs.kicad.org/9.0/en/pcbnew/pcbnew.html#custom_design_rules)
