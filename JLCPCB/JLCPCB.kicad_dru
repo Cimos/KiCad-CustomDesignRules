@@ -149,6 +149,11 @@
 	(constraint clearance (min 0.2mm))
 )
 
+(rule "JLCPCB: BGA to Trace"
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'SMD' && B.Type == 'Track' &&  A.Net != B.Net")
+	(constraint clearance (min 0.1mm))
+)
+
 
 # --- Minimum Trace Width and Spacing ---
 
