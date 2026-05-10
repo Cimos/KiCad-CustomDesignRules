@@ -1,168 +1,199 @@
 (version 1)
-
-# --- Minimum trace width and spacing (PICK ONE) ---
-
-# 2oz copper
-#(rule "PCBWay: Minimum Trace Width and Spacing (outer layer)"
-#(constraint track_width (min 0.1524mm))
-#(constraint clearance (min 0.1778mm))
-#(layer outer)
-#(condition "A.Type == 'track'"))
-
-#(rule "PCBWay: Minimum Trace Width and Spacing (innner layer)"
-#(constraint track_width (min 0.1524mm))
-#(constraint clearance (min 0.1778mm))
-#(layer inner)
-#(condition "A.Type == 'track'"))
+# Custom Design Rules (DRC) for KiCad 8.0 (Stored in '<project>.kicad_dru' file).
+#
+# Matching PCBWay capabilities: https://www.pcbway.com/capabilities.html
+# PCBWay design rule check reference: https://www.pcbway.com/pcb_prototype/PCB_Design_Rule_Check.html
+#
+# KiCad documentation: https://docs.kicad.org/master/id/pcbnew/pcbnew_advanced.html#custom_design_rules
 
 
-# 2-layer, 1oz copper
-(rule "PCBWay: Minimum Trace Width and Spacing (outer layer)"
-(constraint track_width (min 0.127mm))
-(constraint clearance (min 0.127mm))
-(layer outer)
-(condition "A.Type == 'track'"))
+# --- Drill/Hole Size ---
 
-(rule "PCBWay: Minimum Trace Width and Spacing (inner layer)"
-(constraint track_width (min 0.1mm))
-(constraint clearance (min 0.1mm))
-(layer inner)
-(condition "A.Type == 'track'"))
+(rule "PCBWay: Drill Hole Size"
+	(constraint hole_size (min 0.15mm) (max 6.3mm))
+)
 
-# 4-layer , 1oz and 0.5oz copper
-#(rule "PCBWay: Minimum Trace Width and Spacing (outer layer)"
-#(constraint track_width (min 0.09mm))
-#(constraint clearance (min 0.09mm))
-#(layer outer)
-#(condition "A.Type == 'track'"))
+(rule "PCBWay: Via Hole Size"
+	(condition "A.Type == 'Via'")
+	# Choose between:
+	# 2-layer standard
+	# (constraint hole_size (min 0.3mm))
+	# 4-layer standard
+	# (constraint hole_size (min 0.3mm))
+	# 4-layer advanced (preferred)
+	(constraint hole_size (min 0.2mm))
+	# 4-layer advanced (smallest)
+	# (constraint hole_size (min 0.15mm))
+)
 
-#(rule "PCBWay: Minimum Trace Width and Spacing (inner layer)"
-#(constraint track_width (min 0.1mm))
-#(constraint clearance (min 0.09mm))
-#(layer inner)
-#(condition "A.Type == 'track'"))
-
-# ---
-
-# Drill/hole size - listed here to maintain order of rule application. Must not override rule set in Via hole/diameter size below.
-(rule "PCBWay: drill hole size (mechanical)"
-(constraint hole_size (min 0.15mm) (max 6.3mm)))
-
-# --- Via hole/diameter size (PICK ONE) ----
-
-# 2-layer standard
-(rule "PCBWay: Minimum Via Diameter and Hole Size"
-(constraint hole_size (min 0.3mm))
-(constraint via_diameter (min 0.5mm))
-(condition "A.Type == 'via'"))
-
-# 4-layer standard
-#(rule "PCBWay: Minimum Via Diameter and Hole Size"
-#(constraint hole_size (min 0.3mm))
-#(constraint via_diameter (min 0.45mm))
-#(condition "A.Type == 'via'"))
-
-# 4-layer advanced
-#(rule "PCBWay: Minimum Via Diameter and Hole Size"
-#(constraint hole_size (min 0.25mm))
-#(constraint via_diameter (min 0.4mm))
-#(constraint disallow buried_via)
-#(condition "A.Type == 'via'"))
-
-# 4-layer advanced
-#(rule "PCBWay: Minimum Via Diameter and Hole Size"
-#(constraint hole_size (min 0.2mm))
-#(constraint via_diameter (min 0.35mm))
-#(condition "A.Type == 'via'"))
-
-# 4-layer advanced
-#(rule "PCBWay: Minimum Via Diameter and Hole Size"
-#(constraint hole_size (min 0.15mm))
-#(constraint via_diameter (min 0.3mm))
-#(condition "A.Type == 'via'"))
-
-# --- Drill/hole size ----
+# PCBWay: "Annular Ring (Pad Ring Width) Standard: 0.15mm(6mil)"
+(rule "PCBWay: Via Annular Ring"
+	(condition "A.Type == 'Via'")
+	(constraint annular_width (min 0.15mm))
+)
 
 (rule "PCBWay: PTH Hole Size"
-(constraint hole_size (min 0.2mm) (max 6.35mm))
-(condition "A.Type != 'Via' && A.isPlated()"))
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'Through-hole' && A.isPlated()")
+	(constraint hole_size (min 0.2mm) (max 6.35mm))
+)
 
-(rule "PCBWay: Minimum Non-plated Hole Size"
-(constraint hole_size (min 0.5mm))
-(condition "A.Type == 'pad' && !A.isPlated()"))
+(rule "PCBWay: NPTH Hole Size"
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'NPTH, mechanical' && !A.isPlated()")
+	(constraint hole_size (min 0.5mm))
+)
 
-(rule "PCBWay: Pad Size"
-(constraint hole_size (min 0.5mm))
-(constraint annular_width (min 0.25mm))
-(condition "A.Type == 'Pad' && A.isPlated()"))
+(rule "PCBWay: Castellated Hole Size"
+	(layer outer)
+	(condition "A.Type == 'Pad' && A.Fabrication_Property == 'Castellated pad'")
+	(constraint hole_size (min 0.6mm))
+)
 
-(rule "PCBWay: Minimum Castellated Hole Size"
-(constraint hole_size (min 0.6mm))
-(condition "A.Type == 'pad' && A.Fabrication_Property == 'Castellated pad'"))
+(rule "PCBWay: PTH Annular Ring"
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'Through-hole' && A.isPlated()")
+	(constraint annular_width (min 0.15mm))
+)
 
-(rule "PCBWay: Min. Plated Slot Width"
-(constraint hole_size (min 0.5mm))
-(condition "(A.Hole_Size_X != A.Hole_Size_Y) && A.isPlated()"))
+(rule "PCBWay: NPTH Annular Ring"
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'NPTH, mechanical' && !A.isPlated()")
+	(constraint annular_width (min 0.25mm))
+)
 
-(rule "PCBWay: Min. Non-Plated Slot Width"
-(constraint hole_size (min 0.8mm))
-(condition "(A.Hole_Size_X != A.Hole_Size_Y) && !A.isPlated()"))
 
-# --- Minimum clearance ---
-(rule "PCBWay: hole to hole clearance (different nets)"
-(constraint hole_to_hole (min 0.5mm))
-(condition "A.Net != B.Net"))
+# --- Slot Width ---
 
-(rule "PCBWay: via to track clearance"
-(constraint hole_clearance (min 0.254mm))
-(condition "A.Type == 'via' && B.Type == 'track'"))
+(rule "PCBWay: Plated Slot Width"
+	(condition "A.Type == 'Pad' && (A.Hole_Size_X != A.Hole_Size_Y) && A.isPlated()")
+	(constraint hole_size (min 0.5mm))
+)
 
-(rule "PCBWay: via to via clearance (same nets)"
-(constraint hole_to_hole (min 0.254mm))
-(condition "A.Type == 'via' && B.Type == A.Type && A.Net == B.Net"))
+(rule "PCBWay: Non-Plated Slot Width"
+	(condition "A.Type == 'Pad' && (A.Hole_Size_X != A.Hole_Size_Y) && !A.isPlated()")
+	(constraint hole_size (min 0.8mm))
+)
 
-(rule "PCBWay: pad to pad clearance (with hole, different nets)"
-(constraint hole_to_hole (min 0.5mm))
-(condition "A.Type == 'pad' && B.Type == A.Type && A.Net != B.Net"))
 
-(rule "PCBWay: pad to pad clearance (without hole, different nets)"
-(constraint clearance (min 0.127mm))
-(condition "A.Type == 'Pad' && B.Type == 'Pad'"))
+# --- Minimum Clearance ---
 
-(rule "PCBWay: NPTH to Track clearance"
-(constraint hole_clearance (min 0.254mm))
-(condition "A.Pad_Type == 'NPTH, mechanical' && B.Type == 'track'"))
+(rule "PCBWay: Hole to Hole Clearance (Different Nets)"
+	(condition "A.Net != B.Net")
+	(constraint hole_to_hole (min 0.5mm))
+)
 
-(rule "PCBWay: NPTH with copper around"
-(constraint hole_clearance (min 0.20mm))
-(condition "A.Pad_Type == 'NPTH, mechanical' && B.Type != 'track'"))
+(rule "PCBWay: Via Hole to Via Hole Clearance (Same Net)"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && A.Net == B.Net")
+	(constraint hole_to_hole (min 0.254mm))
+)
 
-(rule "PCBWay: PTH to Track clearance"
-(constraint hole_clearance (min 0.33mm))
-(condition "A.isPlated() && A.Type != 'Via' && B.Type == 'track'"))
+(rule "PCBWay: Pad to Pad Clearance (Pad without Hole, Different Nets)"
+	(condition "A.Type == 'Pad' && (A.Pad_Type != 'Through-hole' && A.Pad_Type != 'NPTH, mechanical') && B.Type == 'Pad' && (B.Pad_Type != 'Through-hole' && B.Pad_Type != 'NPTH, mechanical') && A.Net != B.Net")
+	(constraint clearance (min 0.127mm))
+)
 
-(rule "PCBWay: Pad to Track clearance"
-(constraint clearance (min 0.2mm))
-(condition "A.isPlated() && A.Type != 'Via' && B.Type == 'track'"))
+(rule "PCBWay: Pad Hole to Pad Hole Clearance (Pad with Hole, Different Nets)"
+	(condition "A.Type == 'Pad' && (A.Pad_Type == 'Through-hole' || A.Pad_Type == 'NPTH, mechanical') && B.Type == 'Pad' && (B.Pad_Type == 'Through-hole' || B.Pad_Type == 'NPTH, mechanical') && A.Net != B.Net")
+	(constraint hole_to_hole (min 0.5mm))
+)
 
-# --- Board Outlines (PICK ONE) ---
-#Default Routed Edge Clearance
-(rule "PCBWay: Trace to Outline"
-(constraint edge_clearance (min 0.3mm))
-(condition "A.Type == 'track'"))
+(rule "PCBWay: Via to Trace"
+	(condition "A.Type == 'Via' && B.Type == 'Track'")
+	(constraint hole_clearance (min 0.254mm))
+)
 
-#Special Clearance for V-Score Edges
-#(rule "PCBWay: Trace to V-Cut"
-#(constraint edge_clearance (min 0.4mm))
-#(condition "A.Type == 'track'"))
+(rule "PCBWay: PTH to Trace"
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'Through-hole' && A.isPlated() && B.Type == 'Track'")
+	(constraint hole_clearance (min 0.33mm))
+)
 
-# --- Silkscreen ---
-(rule "PCBWay: Minimum Text"
-(constraint text_thickness (min 0.15mm))
-(constraint text_height (min 0.8mm))
-(layer "?.Silkscreen"))
+(rule "PCBWay: NPTH to Trace"
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'NPTH, mechanical' && !A.isPlated() && B.Type == 'Track'")
+	(constraint hole_clearance (min 0.254mm))
+)
+
+(rule "PCBWay: NPTH to Copper (non-Track)"
+	(condition "A.Type == 'Pad' && A.Pad_Type == 'NPTH, mechanical' && !A.isPlated() && B.Type != 'Track'")
+	(constraint hole_clearance (min 0.20mm))
+)
+
+(rule "PCBWay: Pad to Trace"
+	(condition "A.Type == 'Pad' && (A.Pad_Type == 'Through-hole' || A.Pad_Type == 'NPTH, mechanical') && B.Type == 'Track' && A.Net != B.Net")
+	(constraint clearance (min 0.2mm))
+)
+
+
+# --- Minimum Trace Width and Spacing ---
+
+(rule "PCBWay: Trace Width (Outer Layer)"
+	(layer outer)
+	(condition "A.Type == 'Track'")
+	# Choose between:
+	# 1oz copper
+	(constraint track_width (min 0.127mm))
+	# 2oz copper
+	# (constraint track_width (min 0.1524mm))
+	# 4-layer 1oz/0.5oz
+	# (constraint track_width (min 0.09mm))
+)
+
+(rule "PCBWay: Trace Spacing (Outer Layer)"
+	(layer outer)
+	(condition "A.Type == 'Track' && B.Type == 'Track'")
+	# Choose between:
+	# 1oz copper
+	(constraint clearance (min 0.127mm))
+	# 2oz copper
+	# (constraint clearance (min 0.1778mm))
+	# 4-layer 1oz/0.5oz
+	# (constraint clearance (min 0.09mm))
+)
+
+(rule "PCBWay: Trace Width (Inner Layer)"
+	(layer inner)
+	(condition "A.Type == 'Track'")
+	# Choose between:
+	# 1oz copper (4-layer)
+	(constraint track_width (min 0.1mm))
+	# 2oz copper
+	# (constraint track_width (min 0.1524mm))
+)
+
+(rule "PCBWay: Trace Spacing (Inner Layer)"
+	(layer inner)
+	(condition "A.Type == 'Track' && B.Type == 'Track'")
+	# Choose between:
+	# 1oz copper (4-layer)
+	(constraint clearance (min 0.1mm))
+	# 2oz copper
+	# (constraint clearance (min 0.1778mm))
+)
+
+
+# --- Legend ---
+
+(rule "PCBWay: Minimum Line Width"
+	(layer "?.Silkscreen")
+	(condition "A.Type == 'Text' || A.Type == 'Text Box'")
+	(constraint text_thickness (min 0.15mm))
+)
+
+(rule "PCBWay: Minimum Text Height"
+	(layer "?.Silkscreen")
+	(condition "A.Type == 'Text' || A.Type == 'Text Box'")
+	(constraint text_height (min 0.8mm))
+)
 
 (rule "PCBWay: Pad to Silkscreen"
-(constraint silk_clearance (min 0.15mm))
-(layer outer)
-(condition "A.Type == 'pad' && (B.Type == 'text' || B.Type == 'graphic')"))
+	(condition "A.Type == 'Pad' && ((A.existsOnLayer('F.Mask') && B.Layer == 'F.Silkscreen') || (A.existsOnLayer('B.Mask') && B.Layer == 'B.Silkscreen'))")
+	(constraint silk_clearance (min 0.15mm))
+)
+
+
+# --- Board Outlines ---
+
+(rule "PCBWay: Trace to Board Edge"
+	(condition "A.Type == 'Track'")
+	# Choose between:
+	# Routed
+	(constraint edge_clearance (min 0.3mm))
+	# V-Cut Panel
+	# (constraint edge_clearance (min 0.4mm))
+)
