@@ -1,0 +1,46 @@
+name: Bug report
+description: A rule fires when it shouldn't, or doesn't fire when it should
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: fab
+    attributes:
+      label: Fab
+      options:
+        - JLCPCB
+        - PCBWay
+    validations:
+      required: true
+  - type: input
+    id: rule
+    attributes:
+      label: Rule name
+      description: The exact name from the .kicad_dru file, e.g. "JLCPCB: Trace Width (Outer Layer)"
+    validations:
+      required: true
+  - type: input
+    id: kicad
+    attributes:
+      label: KiCad version
+      placeholder: e.g. 8.0.5
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: Minimal KiCad project or steps. A zipped project attached to the issue is fine.
+    validations:
+      required: false

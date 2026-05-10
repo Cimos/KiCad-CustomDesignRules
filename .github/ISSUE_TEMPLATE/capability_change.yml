@@ -1,0 +1,48 @@
+name: Fab capability change
+description: The fab updated their published spec and a rule needs updating
+labels: ["capability-change"]
+body:
+  - type: dropdown
+    id: fab
+    attributes:
+      label: Fab
+      options:
+        - JLCPCB
+        - PCBWay
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source URL
+      description: Direct link to the capability page or document
+    validations:
+      required: true
+  - type: input
+    id: rule
+    attributes:
+      label: Affected rule
+      description: Existing rule name, or "new rule" if this needs a new one
+    validations:
+      required: true
+  - type: input
+    id: old
+    attributes:
+      label: Old value
+      placeholder: e.g. 0.1mm
+    validations:
+      required: false
+  - type: input
+    id: new
+    attributes:
+      label: New value
+      placeholder: e.g. 0.15mm
+    validations:
+      required: true
+  - type: textarea
+    id: quote
+    attributes:
+      label: Quote from the source
+      description: Paste the exact text from the fab's capability page so future reviewers can verify
+    validations:
+      required: true
