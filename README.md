@@ -1,23 +1,39 @@
-# KiCad-Custom-Design-Rules
+# KiCad Custom Design Rules
 
-Forked From [KiCad-DesignRules](https://github.com/labtroll/KiCad-DesignRules) due to lack of activity and renamed to "KiCad-Custom-Design-Rules".
+Custom design rules for KiCad 8 that match the manufacturing capabilities of common PCB fab houses. Rules are stored in `.kicad_dru` files and validated against a paired test board (`.kicad_pcb`) so each rule has at least one footprint that passes or fails as expected.
 
-JLCPCB Design Rules for KiCad 8.0, implemented as Custom Rules in PCB Editor (`File > Board_Setup... > Design Rules > Custom Rules`), and stored in the `.kicad_dru` file.
+> Maintained fork of [labtroll/KiCad-DesignRules](https://github.com/labtroll/KiCad-DesignRules), which has been inactive since November 2024.
 
-These rules use some features only available in KiCad 7.0.
+## Supported fabs
 
-Each design rule is validated for PASS/FAIL the associated PCB (`.kicad_pcb`).
+| Fab    | Folder                | Source of capabilities                            |
+|--------|-----------------------|---------------------------------------------------|
+| JLCPCB | [`JLCPCB/`](JLCPCB/)  | https://jlcpcb.com/capabilities/pcb-capabilities  |
+| PCBWay | [`PCBWay/`](PCBWay/)  | https://www.pcbway.com/capabilities.html          |
 
-## Use in your KiCad 8 project
+Each folder contains:
 
-Simply copy the [`JLCPCB.kicad_dru`](JLCPCB/JLCPCB.kicad_dru) file into your KiCad 7 project folder, and rename it to match your project name `your-project.kicad_dru`.
+- `<FAB>.kicad_dru` — the rule file you copy into your project
+- `<FAB>.kicad_pcb`, `.kicad_sch`, `.kicad_pro` — a small test board exercising the rules
 
-The JLCPCB Design Rules will automatically be included in the KiCad PCB Editor (`File`>`Board Setup...`>`Design Rules`>`Custom Rules`), and be included when performing a [Design Rules Check (DRC)](https://docs.kicad.org/8.0/en/pcbnew/pcbnew.html#design_rule_checking) (`Inspect`>`Design Rules Checker`).
+## Use in your project
 
-## JLCPCB documentation
+1. Copy the relevant `.kicad_dru` from `JLCPCB/` or `PCBWay/` into your KiCad project folder.
+2. Rename it to match your project: `your-project.kicad_dru`.
+3. KiCad picks it up automatically. View under `File > Board Setup > Design Rules > Custom Rules`.
+4. Run `Inspect > Design Rules Checker` (or press F8) to apply.
 
-- [PCB Manufacturing & Assembly Capabilities](https://jlcpcb.com/capabilities/pcb-capabilities)
+Many rules have alternates commented out for different layer counts or copper weights. Read the comments at the top of each rule and uncomment the variant that matches what you're ordering.
 
-## KiCAD documentation
+## KiCad documentation
 
-- [Custom Design Rules (KiCad 8.0)](https://docs.kicad.org/8.0/en/pcbnew/pcbnew.html#custom-design-rules)
+- [Custom Design Rules (8.0)](https://docs.kicad.org/8.0/en/pcbnew/pcbnew.html#custom-design-rules)
+- [Design Rules Check (8.0)](https://docs.kicad.org/8.0/en/pcbnew/pcbnew.html#design_rule_checking)
+
+## Contributing
+
+Bug reports, capability updates, and PRs are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the conventions used in this repo.
+
+## License
+
+[MIT](LICENSE)
