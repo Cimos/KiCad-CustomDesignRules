@@ -1,0 +1,24 @@
+name: Lint design rules
+
+on:
+  push:
+    paths:
+      - "**/*.kicad_dru"
+      - "tools/lint_dru.py"
+      - ".github/workflows/lint.yml"
+  pull_request:
+    paths:
+      - "**/*.kicad_dru"
+      - "tools/lint_dru.py"
+      - ".github/workflows/lint.yml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Lint .kicad_dru files
+        run: python3 tools/lint_dru.py
