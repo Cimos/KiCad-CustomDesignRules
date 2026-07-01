@@ -149,6 +149,15 @@
 	(constraint clearance (min 0.2mm))
 )
 
+# JLCPCB: "The minimum trace width & spacing under a BGA is 0.1mm(4mil)."
+# https://jlcpcb.com/help/article/BGA-Design-Guidelines---PCB-Layout-Recommendations-for-BGA-packages
+# Scoped to a "BGA" net class so only the BGA fan-out nets get the relaxed
+# clearance. Assign the relevant nets to a BGA net class in Board Setup > Net Classes.
+(rule "JLCPCB: BGA to Trace"
+	(condition "A.NetClass == 'BGA' && B.Type == 'Track' && A.Net != B.Net")
+	(constraint clearance (min 0.1mm))
+)
+
 
 # --- Minimum Trace Width and Spacing ---
 
