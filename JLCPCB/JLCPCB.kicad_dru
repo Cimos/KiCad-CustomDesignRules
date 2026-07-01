@@ -9,16 +9,6 @@
 # - https://gist.github.com/darkxst/f713268e5469645425eed40115fb8b49 (with comments)
 # - https://gist.github.com/denniskupec/e163d13b0a64c2044bd259f64659485e (with comments)
 
-# TODO new rule: NPTH pads.
-# Inner diameter of pad should be 0.4-0.5 mm larger than NPTH drill diameter.
-# JLCPCB: "We make NPTH via dry sealing film process, if customer would like a NPTH but around with pad/copper, our engineer will dig out around pad/copper about 0.2mm-0.25mm, otherwise the metal potion will be flowed into the hole and it becomes a PTH. (there will be no copper dig out optimization for single board)."
-
-# TODO: new rule for plated slots: min diameter/width 0.5mm
-# JLCPCB: "The minimum plated slot width is 0.5mm, which is drawn with a pad."
-
-# TODO new rule: non-plated slots: min diameter/width 1.0mm
-# JLCPCB: "The minimum Non-Plated Slot Width is 1.0mm, please draw the slot outline in the mechanical layer(GML or GKO)""
-
 
 # --- Drill/Hole Size ---
 
@@ -92,6 +82,22 @@
 (rule "JLCPCB: Only Throughhole VIAs are supported" 
 	(condition "A.Type == 'Via'")
 	(constraint assertion "!(A.isBlindBuriedVia() || A.isMicroVia())")
+)
+
+
+# --- Slot Width ---
+
+# JLCPCB: "The minimum plated slot width is 0.5mm, which is drawn with a pad."
+(rule "JLCPCB: Plated Slot Width"
+	(condition "A.Type == 'Pad' && (A.Hole_Size_X != A.Hole_Size_Y) && A.isPlated()")
+	(constraint hole_size (min 0.5mm))
+)
+
+# JLCPCB: "The minimum Non-Plated Slot Width is 1.0mm, please draw the slot
+# outline in the mechanical layer (GML or GKO)."
+(rule "JLCPCB: Non-Plated Slot Width"
+	(condition "A.Type == 'Pad' && (A.Hole_Size_X != A.Hole_Size_Y) && !A.isPlated()")
+	(constraint hole_size (min 1.0mm))
 )
 
 
